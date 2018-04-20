@@ -23,7 +23,9 @@ class AuthorsController extends Controller
         }
 
         $html = $htmlBuilder
-        ->columns(['data' => 'name', 'name' => 'name', 'title' => 'Nama']);
+        ->columns([
+            ['data' => 'name', 'name' => 'name', 'title' => 'Nama']
+        ]);
 
         return view('authors.index', compact('html'));
 
