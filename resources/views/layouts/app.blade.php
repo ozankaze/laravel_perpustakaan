@@ -35,7 +35,19 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        @if (auth()->check())
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('home') }}">Beranda</a>
+                            </li>
+                            @role('admin')
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('authors.index') }}">Penulis</a>
+                                </li>
+                                <li class="nav-item">
+                                    {{-- <a class="nav-link" href="{{ route('books.index') }}">Books</a> --}}
+                                </li>
+                            @endrole
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -80,5 +92,6 @@
     <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('js/custom.js') }}"></script>
+    @yield('scripts')
 </body>
 </html>

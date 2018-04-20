@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Author;
+use Yajra\DataTables\Html\Builder;
+use Yajra\DataTables\DataTables;
 
 class AuthorsController extends Controller
 {
@@ -11,9 +14,19 @@ class AuthorsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request, Builder $htmlBuilder)
     {
-        //
+        if($request->ajax()) {
+            $authors = Author::all();
+
+            return Datatables::of($authors)->toJson();
+        }
+
+        $html = $htmlBuilder
+        ->columns(['data' => 'name', 'name' => 'name', 'title' => 'Nama']);
+
+        return view('authors.index', compact('html'));
+
     }
 
     /**
