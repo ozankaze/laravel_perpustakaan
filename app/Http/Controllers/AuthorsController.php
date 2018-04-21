@@ -38,7 +38,7 @@ class AuthorsController extends Controller
      */
     public function create()
     {
-        //
+        return view('authors.create');
     }
 
     /**
@@ -49,7 +49,17 @@ class AuthorsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:authors'
+        ],
+        [
+            'name.required' => 'Harus Di Isi Gak Boleh Kosong',
+            'name.unique' => 'Nama tersebut Sudah Ada Di Daftar, Cobalah nama Lain'
+        ]);
+
+        $authors = Author::create($request->all());
+        return redirect()->route('authors.index');
+
     }
 
     /**
