@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Author;
 use Yajra\DataTables\Html\Builder;
 use Yajra\DataTables\DataTables;
+use Session;
 
 class AuthorsController extends Controller
 {
@@ -58,6 +59,12 @@ class AuthorsController extends Controller
         ]);
 
         $authors = Author::create($request->all());
+
+        Session::flash("flash_notification", [
+            "level" => "success",
+            "message" => "Berhasil Menyimpan $authors->name",
+        ]);
+
         return redirect()->route('authors.index');
 
     }

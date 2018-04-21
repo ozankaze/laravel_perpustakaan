@@ -24,7 +24,7 @@
                             <input name="name" type="text" class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="Nama Penulis">
                                 @if ($errors->has('name'))
                                     <span class="invalid-feedback">
-                                    <strong>{{ $errors->first('name') }}</strong>
+                                        <strong>{{ $errors->first('name') }}</strong>
                                     </span>
                                 @endif
                             </div>
