@@ -20,12 +20,18 @@ class AuthorsController extends Controller
         if($request->ajax()) {
             $authors = Author::all();
 
-            return Datatables::of($authors)->toJson();
+            return Datatables::of($authors)
+                ->addColumn('action', function ($author) {
+                    return view ('datatable._action', [
+                        'edit_url' => route('authors.edit', $author->id),
+                    ]);
+                })->toJson();
         }
 
         $html = $htmlBuilder
         ->columns([
-            ['data' => 'name', 'name' => 'name', 'title' => 'Nama']
+            ['data' => 'name', 'name' => 'name', 'title' => 'Nama'],
+            ['data' => 'action', 'name' => 'action', 'title' => '', 'orderable' => false, 'searchable' =>false ]
         ]);
 
         return view('authors.index', compact('html'));
@@ -86,9 +92,9 @@ class AuthorsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Author $author)
     {
-        //
+        return view('authors.edit', compact('author'));
     }
 
     /**
@@ -98,9 +104,24 @@ class AuthorsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,Author $author)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:authors,name,'. $author->id
+        ],
+        [
+            'name.required' => 'Harus Di Isi Gak Boleh Kosong', 
+            'name.unique' => 'Nama Tersebut Sudah Ada Di Daftar, Cobalah nama Lain'
+        ]);
+
+        $author->update($request->only('name'));
+
+        Session::flash("flash_notification", [
+            "level" => "success",
+            "message" => "Berhasil Menyimpan $author->name",
+        ]);
+
+        return redirect()->route('authors.index');
     }
 
     /**
