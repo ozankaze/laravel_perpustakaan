@@ -24,6 +24,7 @@ class AuthorsController extends Controller
                 ->addColumn('action', function ($author) {
                     return view ('datatable._action', [
                         'edit_url' => route('authors.edit', $author->id),
+                        'delete_url' => route('authors.destroy', $author->id),
                     ]);
                 })->toJson();
         }
@@ -130,8 +131,15 @@ class AuthorsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Author $author)
     {
-        //
+        $author->delete();
+
+        Session::flash("flash_notification", [
+            "level" => "danger",
+            "message"   => "Penulis Berhasil Di Hapus <strong>$author->name</strong>"
+        ]);
+
+        return redirect()->route('authors.index');
     }
 }
