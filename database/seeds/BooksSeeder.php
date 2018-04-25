@@ -24,19 +24,19 @@ class BooksSeeder extends Seeder
         ]);
 
         $book1 = Book::create([
-            'title' => 'Sword Art Online',
+            'title' => 'Bagaimana Mencari kawan Dan mempengaruhi Orang lain',
             'amount' => 2,
             'author_id' => $author2->id
         ]);
 
         $book1 = Book::create([
-            'title' => 'Sword Art Online',
+            'title' => 'One Piece',
             'amount' => 5,
             'author_id' => $author3->id
         ]);
 
         $book1 = Book::create([
-            'title' => 'Sword Art Online',
+            'title' => 'Naruto',
             'amount' => 1,
             'author_id' => $author3->id
         ]);
