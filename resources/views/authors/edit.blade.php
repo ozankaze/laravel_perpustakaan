@@ -22,7 +22,7 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Nama Penulis</label>
                             <div class="col-sm-4">
-                            <input name="name" type="text" class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="Nama Penulis">
+                            <input name="name" type="text" class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ $author->name }}">
                                 @if ($errors->has('name'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('name') }}</strong>
