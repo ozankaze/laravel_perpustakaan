@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Book;
+use Yajra\DataTables\Html\Builder;
+use Yajra\DataTables\DataTables;
 
 class BooksController extends Controller
 {
@@ -11,9 +14,31 @@ class BooksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request, Builder $htmlBuilder)
     {
-        //
+        if($request->ajax()) {
+            $books = Book::with('author');
+            
+            return Datatables::of($books)
+                ->addColumn('action', function ($book) {
+                    return view ('datatable._action', [
+                        'model' => $book,
+                        'delete_url'  => route('books.destroy', $book->id),
+                        'edit_url'  => route('books.edit', $book->id),
+                        'confirm_message'   => "Yakin Mau Menghapus" . $book->title,
+                    ]);
+                })->toJson();
+        }
+
+        $html = $htmlBuilder
+        ->columns([
+            ['data' => 'title', 'name' => 'title', 'title' => 'Judul', 'orderable' => false],
+            ['data' => 'amount', 'name' => 'amount', 'title' => 'Jumlah', 'orderable' => false],
+            ['data' => 'author.name', 'name' => 'author.name', 'title' => 'Penulis', 'orderable' => false, 'searchable' =>false],
+            ['data' => 'action', 'name' => 'action', 'title' => '', 'orderable' => false, 'searchable' =>false ]
+        ]);
+
+        return view('books.index', compact('html'));
     }
 
     /**
