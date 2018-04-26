@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Book;
+use App\Author;
+use Session;
 use Yajra\DataTables\Html\Builder;
 use Yajra\DataTables\DataTables;
 
@@ -48,7 +50,9 @@ class BooksController extends Controller
      */
     public function create()
     {
-        //
+        $authors = Author::all();
+
+        return view('books.create', compact('authors'));
     }
 
     /**
@@ -59,7 +63,41 @@ class BooksController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required|unique:books,title',
+            'author_id' => 'required|exists:authors,id',
+            'amount'  => 'required|numeric',
+            'cover' => 'image|max:2048'
+        ]);
+
+        $book = Book::create($request->except('cover'));
+
+        // isi field cover jika ada cover yang diupload
+        if ($request->hasFile('cover')) {
+            // Mengambil file yang diupload
+            $uploaded_cover = $request->file('cover');
+            
+            // mengambil extension file
+            $extension = $uploaded_cover->getClientOriginalExtension();
+            
+            // membuat nama file random berikut extension
+            $filename = md5(time()) . '.' . $extension;
+            
+            // menyimpan cover ke folder public/img
+            $destinationPath = public_path() . DIRECTORY_SEPARATOR . 'img';
+            $uploaded_cover->move($destinationPath, $filename);
+            
+            // mengisi field cover di book dengan filename yang baru dibuat
+            $book->cover = $filename;
+            $book->save();
+        }
+
+        Session::flash("flash_notification", [
+            "level" => "success",
+            "message" => "Berhasil Menyimpan $book->title",
+        ]);
+
+        return redirect()->route('books.index');
     }
 
     /**
