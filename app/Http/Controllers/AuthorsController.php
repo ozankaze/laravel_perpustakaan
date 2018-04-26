@@ -25,6 +25,7 @@ class AuthorsController extends Controller
                     return view ('datatable._action', [
                         'edit_url' => route('authors.edit', $author->id),
                         'delete_url' => route('authors.destroy', $author->id),
+                        'confirm_message' => 'Yakin mau menghapus ' . $author->name . '?'
                     ]);
                 })->toJson();
         }

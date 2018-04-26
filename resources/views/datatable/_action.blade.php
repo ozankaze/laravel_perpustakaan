@@ -1,4 +1,4 @@
-<form action="{{ $delete_url }}" method="POST" class="float-right" >
+<form action="{{ $delete_url }}" method="POST" class="float-right js-confirm" data-confirm="{{ $confirm_message }}">
     @csrf
     @method('DELETE')
 

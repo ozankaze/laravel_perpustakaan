@@ -92,7 +92,7 @@
 
     <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('js/custom.js') }}"></script>
+    <script src="{{ asset('js/custom.js') }}"></script> {{-- konfirmasi ketika Menghapusdata --}}
     @yield('scripts')
 </body>
 </html>
