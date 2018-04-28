@@ -117,9 +117,11 @@ class BooksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Book $book)
     {
-        //
+        $authors = Author::all();
+
+        return view('books.edit', compact('book', 'authors'));
     }
 
     /**
