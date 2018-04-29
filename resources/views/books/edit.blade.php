@@ -15,8 +15,9 @@
                 <div class="card-header">Tambah Penulis</div>
 
                 <div class="card-body">
-                    <form class="form-horizontal" action="{{ route('books.store') }}" method="post" enctype="multipart/form-data">
+                    <form class="form-horizontal" action="{{ route('books.update', $book->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
+                        @method('PATCH')
                         
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Title</label>
