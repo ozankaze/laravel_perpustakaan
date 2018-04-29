@@ -191,6 +191,26 @@ class BooksController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $book = Book::findOrFail($id);
+
+        // hapus cover lama, jika ada
+        if ($book->cover) {
+            $old_cover = $book->cover;
+            $filepath = public_path() . DIRECTORY_SEPARATOR . 'img'
+            . DIRECTORY_SEPARATOR . $book->cover;
+
+            try {
+                File::delete($filepath);
+            } catch (FileNotFoundException $e) {
+            // File sudah dihapus/tidak ada
+            }
+        }
+
+        Session::flash('flash_notification', [
+            "level" => "success",
+            "message" => "Buku Berhasil Di Hapus <strong>$book->title</strong>"
+        ]);
+
+        return redirect()->route('books.index');
     }
 }
