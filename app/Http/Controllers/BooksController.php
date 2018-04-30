@@ -206,6 +206,8 @@ class BooksController extends Controller
             }
         }
 
+        $book->delete();
+
         Session::flash('flash_notification', [
             "level" => "success",
             "message" => "Buku Berhasil Di Hapus <strong>$book->title</strong>"
