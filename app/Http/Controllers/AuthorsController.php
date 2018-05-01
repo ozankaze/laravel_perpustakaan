@@ -70,7 +70,7 @@ class AuthorsController extends Controller
 
         Session::flash("flash_notification", [
             "level" => "success",
-            "message" => "Berhasil Menyimpan $authors->name",
+            "message" => "Berhasil Menyimpan " . "<strong>$authors->name</strong",
         ]);
 
         return redirect()->route('authors.index');
