@@ -34,6 +34,7 @@ class AuthorsController extends Controller
         ->columns([
             ['data' => 'name', 'name' => 'name', 'title' => 'Nama'],
             ['data' => 'action', 'name' => 'action', 'title' => '', 'orderable' => false, 'searchable' =>false ]
+            // Kita juga set searchable dan orderable menjad false agar DataTable tidak mengaktifkan pencarian dan sorting pada field tersebut
         ]);
 
         return view('authors.index', compact('html'));
