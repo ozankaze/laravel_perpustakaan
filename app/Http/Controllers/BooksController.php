@@ -20,7 +20,7 @@ class BooksController extends Controller
     public function index(Request $request, Builder $htmlBuilder)
     {
         if($request->ajax()) {
-            $books = Book::with('author');
+            $books = Book::with('author'); // relasi dari book ke author eager loading
             
             return Datatables::of($books)
                 ->addColumn('action', function ($book) {
