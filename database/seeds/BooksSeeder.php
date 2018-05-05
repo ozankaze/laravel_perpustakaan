@@ -3,6 +3,8 @@
 use Illuminate\Database\Seeder;
 use App\Author;
 use App\Book;
+use App\BorrowLog;
+use App\User;
 
 class BooksSeeder extends Seeder
 {
@@ -23,22 +25,43 @@ class BooksSeeder extends Seeder
             'author_id' => $author1->id
         ]);
 
-        $book1 = Book::create([
+        $book2 = Book::create([
             'title' => 'Bagaimana Mencari kawan Dan mempengaruhi Orang lain',
             'amount' => 2,
             'author_id' => $author2->id
         ]);
 
-        $book1 = Book::create([
+        $book3 = Book::create([
             'title' => 'One Piece',
             'amount' => 5,
             'author_id' => $author3->id
         ]);
 
-        $book1 = Book::create([
+        $book4 = Book::create([
             'title' => 'Naruto',
             'amount' => 1,
             'author_id' => $author3->id
+        ]);
+
+        // Sample peminjaman buku
+        $member = User::where('email', 'member@main.com')->first();
+
+        BorrowLog::create([
+          'user_id' => $member->id,
+          'book_id' => $book1->id,
+          'is_returned' => 0,
+        ]);
+
+        BorrowLog::create([
+          'user_id' => $member->id,
+          'book_id' => $book2->id,
+          'is_returned' => 0,
+        ]);
+
+        BorrowLog::create([
+          'user_id' => $member->id,
+          'book_id' => $book3->id,
+          'is_returned' => 1,
         ]);
     }
 }
