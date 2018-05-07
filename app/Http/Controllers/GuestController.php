@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Yajra\Datatables\Html\Builder;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\Html\Builder;
+use Yajra\DataTables\DataTables;
 use App\Book;
 use Laratrust\LaratrustFacade as Laratrust;
 
@@ -26,17 +26,12 @@ class GuestController extends Controller
                     return '';
                 }
 
-                return '<a class="btn btn-xs btn-primary" href="' . route('guest.books.borrow', $book->id) . '">Pinjam Buku</a>';
-              })
-              ->addColumn('stock', function ($book) {
-                  return $book->stock;
-              })
-              ->toJson();
+                return '<a class="btn btn-xs btn-primary" href="'.route('guest.books.borrow', $book->id).'">Pinjam Buku</a>';
+              })->toJson();
         }
 
         $html = $builder->columns([
           ['data' => 'title', 'name' => 'title', 'title' => 'Judul Buku'],
-          ['data' => 'stock', 'name' => 'stock', 'title' => 'Jumlah Buku'],
           ['data' => 'author.name', 'name' => 'author.name', 'title' => 'Penulis'],
           ['data' => 'action', 'name' => 'action', 'title' => '', 'orderable' => false,
           'searchable' => false],

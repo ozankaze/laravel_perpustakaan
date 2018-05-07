@@ -2,21 +2,15 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row">
         <div class="col-md-12">
-            <nav aria-label="breadcrumb">
-              <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="{{ route('home') }}">Beranda</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Buku</li>
-              </ol>
-            </nav>
-            <div class="card">
-                <div class="card-header">
-                    Daftar Buku
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">Daftar Buku</h2>
                 </div>
 
-                <div class="card-body">
-                    {!! $html->table(['class' => 'table-striped']) !!}
+                <div class="panel-body">
+                    {!! $html->table(['class'=>'table-striped']) !!}
                 </div>
             </div>
         </div>
@@ -24,6 +18,6 @@
 </div>
 @endsection
 
-@push('scripts')
-    {!! $html->scripts() !!}
-@endpush
+@section('scripts')
+{!! $html->scripts() !!}
+@endsection

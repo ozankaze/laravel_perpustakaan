@@ -19,6 +19,9 @@ Route::get('/', 'GuestController@index');
 
 Auth::routes();
 
+// pinjam buku
+Route::get('/book/{book}/borrow', 'BooksController@borrow')->name('guest.books.borrow');
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix'=>'admin', 'middleware'=>['auth', 'role:admin']], function () {

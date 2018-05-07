@@ -9,9 +9,18 @@ use Session;
 use Yajra\DataTables\Html\Builder;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\File; // file 
+// Fiture Peminjam
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\BorrowLog;
+use Illuminate\Support\Facades\Auth;
 
 class BooksController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', 'role:member'])->only(['borrow']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -215,4 +224,26 @@ class BooksController extends Controller
 
         return redirect()->route('books.index');
     }
+
+    public function borrow($id) 
+    {
+      try {
+        $book = Book::findOrFail($id);
+        BorrowLog::create([
+            'user_id' => Auth::user()->id,
+            'book_id' => $id
+        ]);
+        Session::flash('flash_notification', [
+          'level' => 'success',
+          'message' => "Berhasil Meminjam buku $book->title"
+        ]);
+      } catch (ModelNotFoundException $e) {
+        Session::flash('flash_notification', [
+          'level' => 'danger',
+          'message' => "Buku Tidak Di Temukan"
+        ]);
+      }
+
+      return redirect('/');
+    } 
 }
